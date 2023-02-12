@@ -1,0 +1,54 @@
+{% extends 'rattingtax/base.html' %}
+{% load i18n %}
+{% load humanize %}
+{% load static %}
+
+
+{% block details %}
+<table id="rattingtax--table" style="width:100%" class="table table-striped table-compact">
+    <thead>
+        <th></th>
+        <th>{% translate "Corporation"%}</th>
+        <th>{% translate "Amount" %}</th>
+        <th>{% translate "Last Update" %}</th>
+    </thead>
+</table>
+{% endblock %}
+
+{% block extra_javascript %}
+{% include 'bundles/datatables-js.html' %}
+<script type="application/javascript">
+    $(document).ready(function () {
+        $('#rattingtax--table').DataTable({
+            ajax: {
+                url: "{% url 'rattingtax:rattingtax_list_data' %}",
+                dataSrc: 'data',
+                cache: false
+            },
+            columns: [
+                {data: 'corp_icon', width: "40px"},
+                {data: 'corporation_name'},
+                {data: 'amount'},
+                {data: 'last_updated'}
+            ]
+        })
+    })
+</script>
+{% endblock %}
+
+{% block extra_css %}
+{% include 'bundles/datatables-css.html' %}
+<style>
+#rattingtax--table_filter {
+    text-align: right;
+}
+#rattingtax--table tbody td, #rattingtax--table thead th {
+    text-align: center;
+    vertical-align: middle;
+    word-wrap: break-word;
+}
+</style>
+{% endblock %}
+
+{% block extra_script %}
+{% endblock %}
