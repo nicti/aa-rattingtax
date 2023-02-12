@@ -9,6 +9,7 @@
     <thead>
         <th></th>
         <th>{% translate "Corporation"%}</th>
+        <th>{% translate "Tax Rate" %}</th>
         <th>{% translate "Amount" %}</th>
         <th>{% translate "Last Update" %}</th>
     </thead>
@@ -28,6 +29,7 @@
             columns: [
                 {data: 'corp_icon', width: "40px"},
                 {data: 'corporation_name'},
+                {data: 'tax_rate'},
                 {data: 'amount'},
                 {data: 'last_updated'}
             ]

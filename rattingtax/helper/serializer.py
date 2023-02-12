@@ -6,6 +6,7 @@ from allianceauth.eveonline.evelinks.eveimageserver import corporation_logo_url
 from allianceauth.eveonline.evelinks.evewho import corporation_url
 
 # AA RattingTax
+from rattingtax.app_settings import RATTING_TAX_RATE
 from rattingtax.models import CorpTax
 
 
@@ -33,4 +34,9 @@ class CorpTaxSerializer:
             "corporation_ticker": corptax.corporation.corporation_ticker,
             "amount": f"{corptax.amount:,.2f} ISK",
             "last_updated": corptax.last_updated_at,
+            "tax_rate": format_html(
+                '<span style="color:{}">{}%</span>',
+                "green" if corptax.tax_rate >= RATTING_TAX_RATE else "red",
+                (corptax.tax_rate * 100),
+            ),
         }

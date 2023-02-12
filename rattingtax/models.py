@@ -28,9 +28,10 @@ class General(models.Model):
 class CorpTax(models.Model):
     """Corp Tax object"""
 
-    corporation = models.ForeignKey(EveCorporationInfo, on_delete=models.CASCADE)
+    corporation = models.OneToOneField(EveCorporationInfo, on_delete=models.CASCADE)
     amount = models.BigIntegerField(
         null=False,
         default=0,
     )
+    tax_rate = models.FloatField(null=False, default=0)
     last_updated_at = models.DateTimeField(null=False, auto_now=True)
