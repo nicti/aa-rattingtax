@@ -29,10 +29,8 @@ def calculate_current_tax():
     today = datetime.datetime.today()
     monday = today - datetime.timedelta(days=today.weekday())
     sunday = monday + datetime.timedelta(days=6)
-    monday.hour = 0
-    monday.min = 0
-    sunday.hour = 23
-    sunday.minute = 59
+    monday.replace(hour=0, minute=0)
+    sunday.replace(hour=23, minute=59)
     corps = CorporationAudit.objects.all()
     corp: CorporationAudit
     for corp in corps:
@@ -55,7 +53,8 @@ def calculate_current_tax():
         # Covert to integer
         corpTotal = int(corpTotal)
         CorpTax.objects.update_or_create(
-            corporation=corp.corporation, tax_rate=taxRate, amount=corpTotal
+            corporation=corp.corporation,
+            defaults={"tax_rate": taxRate, "amount": corpTotal},
         )
     pass
 
@@ -65,10 +64,8 @@ def generate_invoice():
     today = datetime.datetime.today() - datetime.timedelta(days=7)
     monday = today - datetime.timedelta(days=today.weekday())
     sunday = monday + datetime.timedelta(days=6)
-    monday.hour = 0
-    monday.min = 0
-    sunday.hour = 23
-    sunday.minute = 59
+    monday.replace(hour=0, minute=0)
+    sunday.replace(hour=23, minute=59)
     due = sunday + datetime.timedelta(days=7)
     corps = CorporationAudit.objects.all()
     corp: CorporationAudit

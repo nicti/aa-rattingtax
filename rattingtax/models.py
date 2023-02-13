@@ -28,7 +28,9 @@ class General(models.Model):
 class CorpTax(models.Model):
     """Corp Tax object"""
 
-    corporation = models.OneToOneField(EveCorporationInfo, on_delete=models.CASCADE)
+    corporation = models.OneToOneField(
+        EveCorporationInfo, on_delete=models.CASCADE, primary_key=True
+    )
     amount = models.BigIntegerField(
         null=False,
         default=0,
