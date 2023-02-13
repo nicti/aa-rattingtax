@@ -24,6 +24,7 @@ def rattingtax_list_data(request: WSGIRequest) -> JsonResponse:
     if request.user.has_perm("rattingtax.alliance_access"):
         corptax = CorpTax.objects.all()
     elif request.user.has_perm("rattingtax.corp_access"):
+        # TODO: Fix filtering for none main chars, e.g. CEO alts
         corp = request.user.profile.main_character.corporation
         corptax = CorpTax.objects.filter(corporation=corp)
     else:

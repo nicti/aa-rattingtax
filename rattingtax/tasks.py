@@ -29,8 +29,8 @@ def calculate_current_tax():
     today = datetime.datetime.today()
     monday = today - datetime.timedelta(days=today.weekday())
     sunday = monday + datetime.timedelta(days=6)
-    monday.replace(hour=0, minute=0)
-    sunday.replace(hour=23, minute=59)
+    monday = monday.replace(hour=0, minute=0)
+    sunday = sunday.replace(hour=23, minute=59)
     corps = CorporationAudit.objects.all()
     corp: CorporationAudit
     for corp in corps:
@@ -64,8 +64,8 @@ def generate_invoice():
     today = datetime.datetime.today() - datetime.timedelta(days=7)
     monday = today - datetime.timedelta(days=today.weekday())
     sunday = monday + datetime.timedelta(days=6)
-    monday.replace(hour=0, minute=0)
-    sunday.replace(hour=23, minute=59)
+    monday = monday.replace(hour=0, minute=0)
+    sunday = sunday.replace(hour=23, minute=59)
     due = sunday + datetime.timedelta(days=7)
     corps = CorporationAudit.objects.all()
     corp: CorporationAudit
@@ -94,7 +94,7 @@ def generate_invoice():
             if Invoice.objects.filter(invoice_ref=ref).exists():
                 logger.info(f"Invoice {ref} already exists!")
             else:
-                msg = f"Ratting Tax for {esiInfo['name']}: {monday.year}.{monday.month:02}.{monday.day:02} - {sunday.year}.{sunday.month:02}.{monday.day:02}"
+                msg = f"Ratting Tax for {esiInfo['name']}: {monday.year}.{monday.month:02}.{monday.day:02} - {sunday.year}.{sunday.month:02}.{sunday.day:02}"
                 ceo = EveCharacter.objects.get(character_id=esiInfo["ceo_id"])
                 inv = Invoice.objects.create(
                     character_id=ceo.id,
