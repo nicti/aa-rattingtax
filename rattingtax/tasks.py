@@ -95,7 +95,12 @@ def generate_invoice():
                 logger.info(f"Invoice {ref} already exists!")
             else:
                 msg = f"Ratting Tax for {esiInfo['name']}: {monday.year}.{monday.month:02}.{monday.day:02} - {sunday.year}.{sunday.month:02}.{sunday.day:02}"
-                ceo = EveCharacter.objects.get(character_id=esiInfo["ceo_id"])
+                try:
+                    ceo = EveCharacter.objects.get(character_id=esiInfo["ceo_id"])
+                except EveCharacter.DoesNotExist:
+                    ceo = EveCharacter.objects.create_character(
+                        character_id=esiInfo["ceo_id"]
+                    )
                 inv = Invoice.objects.create(
                     character_id=ceo.id,
                     amount=corpTotal,
