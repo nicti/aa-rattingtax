@@ -7,6 +7,7 @@ from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render
 
 # AA RattingTax
+from rattingtax.app_settings import RATTING_TAX_RATE
 from rattingtax.helper.serializer import CorpTaxSerializer
 from rattingtax.models import CorpTax
 
@@ -14,7 +15,8 @@ from rattingtax.models import CorpTax
 @login_required
 @permission_required("rattingtax.basic_access")
 def index(request: WSGIRequest) -> HttpResponse:
-    return render(request, "rattingtax/index.html")
+    context = {"tax": (RATTING_TAX_RATE * 100)}
+    return render(request, "rattingtax/index.html", context)
 
 
 @login_required
