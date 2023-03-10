@@ -88,7 +88,8 @@ def generate_invoice():
             corpTotal += (float(entry.amount) / taxRate) * RATTING_TAX_RATE
         # Covert to integer
         corpTotal = int(corpTotal)
-        if corpTotal > 0:
+        # Only do taxes if they are more then 10m
+        if corpTotal > 10000000:
             ref = f"RT{corp.id}-{monday.year}{monday.month:02}{monday.day:02}-{sunday.year}{sunday.month:02}{sunday.day:02}"
             # Check existance of ref
             if Invoice.objects.filter(invoice_ref=ref).exists():
